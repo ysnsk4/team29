@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+/phalanx/.vs/phalanx/v16
+/phalanx/Debug
+/phalanx/phalanx/Debug
