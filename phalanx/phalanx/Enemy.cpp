@@ -41,19 +41,19 @@ void Enemy::setHP(int HP) { this->HP = HP; }
 void Enemy::setDEF(int DEF) { this->DEF = DEF; }
 void Enemy::setATK(int ATK) { this->ATK = ATK; }
 void Enemy::setRange(int Range) { this->Range = Range; }
-void Enemy::setisAlive(int isAlive) { this->isAlive; }
+void Enemy::setisAlive(int isAlive) { this->isAlive=isAlive; }
 // Member Function
 void Enemy::update() {}
 
 void Enemy::draw() {
-	if (isAlive == 1) {
+	if (this->isAlive == 1) {
 		DrawBox(
-			posX - radius,
-			posY - radius,
-			posX + radius,
-			posY + radius,
-			GetColor(200, 0, 5),
-			TRUE);
+		this->posX - this->radius,
+		this->posY - this->radius,
+		this->posX + this->radius,
+		this->posY + this->radius,
+		GetColor(200, 0, 5),
+		TRUE);
 	}
 }
 
@@ -61,7 +61,7 @@ void Enemy::Attack() {
 }
 
 void Enemy::move() {
-	if (isAlive == 1) {
+	if (this->isAlive == 1) {
 		posY += speed;
 	}
 }

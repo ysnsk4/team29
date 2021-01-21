@@ -58,5 +58,4 @@ void Player::move(char keys[255], int WIN_WIDTH,int WIN_HEIGHT) {
 	{
 		posX += speed;
 	}
-
 }

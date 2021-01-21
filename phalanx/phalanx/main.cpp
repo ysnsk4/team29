@@ -67,15 +67,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{0,1,0,1,0,1,0,1,0}
 	};
 
-	Enemy* EnemySolder[81] = { new Enemy(32, 32, 32, 8, 10, 5, 5, 64, 0) };
+	Enemy* EnemySolder[81];
+	for (int i = 0; i < 81; i++)
+	{
+		EnemySolder[i] =  new Enemy(32, 32, 32, 8, 10, 5, 5, 64, 0);
+	}
+
 	int EnemyNum = 0;
 		for (int i = 0; i < 9; i++)
 		{
 			for (int j = 0; j < 9; j++)
 			{
-				EnemySolder[EnemyNum]->setPosX(i * EnemySolder[EnemyNum]->getRadius());
-				EnemySolder[EnemyNum]->setPosY(j * EnemySolder[EnemyNum]->getRadius());
+				EnemySolder[EnemyNum]->setPosX(64+j *3*EnemySolder[EnemyNum]->getRadius());
+				EnemySolder[EnemyNum]->setPosY(64+i *-3*EnemySolder[EnemyNum]->getRadius());
 				EnemySolder[EnemyNum]->setisAlive(EnemyArmy[i][j]);
+				EnemyNum++;
 			}
 		}
 
@@ -107,12 +113,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			EnemySolder->setPosX(MousePosX);
 			EnemySolder->setPosX(MousePosY);*/
 		}
-		
+		for (int i = 0; i < 81; i++)
+		{
+			EnemySolder[i]->move();
+		}
 		
 		// ï`âÊèàóù
 		for (int i = 0; i < 81; i++)
 		{
-			EnemySolder[i]->move();
 			EnemySolder[i]->draw();
 		}
 		player->draw();
