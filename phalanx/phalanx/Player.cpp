@@ -9,6 +9,7 @@ Player::Player(int posX, int posY, int radius, int speed,int Range) {
 	this->radius = radius;
 	this->speed = speed;
 	this->Range = Range;
+	this->isGrab = 0;
 }
 
 // Destructor

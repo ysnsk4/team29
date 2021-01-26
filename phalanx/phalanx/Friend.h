@@ -1,9 +1,9 @@
 #pragma once
 #include "Solder.h"
-class Friend :
-    public Solder
+class Friend :public Solder
 {
 private:
+	int FriendSoldier;
 public:
 	Friend(int posX, int posY, int radius, int speed, int HP, int DEF, int ATK, int Range);
 	~Friend();
@@ -31,6 +31,5 @@ public:
 	void setDEF(int DEF);
 	void setATK(int ATK);
 	void setRange(int Range);
-
 };
 

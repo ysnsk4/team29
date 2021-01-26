@@ -7,6 +7,7 @@ private:
 	int radius;
 	int speed;
 	int Range;
+	int isGrab;
 public:
 	Player(int posX, int posY, int radius, int speed,int Range);
 	~Player();

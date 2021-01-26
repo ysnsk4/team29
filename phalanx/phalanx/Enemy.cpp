@@ -13,6 +13,7 @@ Enemy::Enemy(int posX, int posY, int radius, int speed, int HP, int DEF, int ATK
 	this->Range = Range;
 	this->isAlive;
 	EnemyCount++;
+	EnemySolder = LoadGraph("resource/enemy4.png");
 }
 
 // Destructor
@@ -31,7 +32,6 @@ int Enemy::getATK() { return ATK; }
 int Enemy::getRange() { return Range; }
 int Enemy::getisAlive() { return isAlive; }
 
-
 // Setter
 void Enemy::setPosX(int posX) { this->posX = posX; }
 void Enemy::setPosY(int posY) { this->posY = posY; }
@@ -47,13 +47,19 @@ void Enemy::update() {}
 
 void Enemy::draw() {
 	if (this->isAlive == 1) {
-		DrawBox(
+		/*DrawBox(
 		this->posX - this->radius,
 		this->posY - this->radius,
 		this->posX + this->radius,
 		this->posY + this->radius,
 		GetColor(200, 0, 5),
-		TRUE);
+		TRUE);*/
+		DrawGraph(
+			this->posX - 32,
+			this->posY - 32,
+			EnemySolder,
+			true
+		);
 	}
 }
 

@@ -51,9 +51,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	int PlayerSpeed = 4;
 	int EnemyCountNum = 0;
 
-	int MousePosX;
-	int MousePosY;
-	Player* player = new Player(300, 300, 16, 32,32);
+	int MousePosX=0;
+	int MousePosY=0;
+	int oldMousePosX;
+	int oldMousePosY;
+
+	Player* player = new Player(300, 300, 32, 16, 64);
 
 	int EnemyArmy[9][9] = {
 		{1,0,1,0,1,0,1,0,1},
@@ -78,13 +81,28 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			for (int j = 0; j < 9; j++)
 			{
-				EnemySolder[EnemyNum]->setPosX(64+j *3*EnemySolder[EnemyNum]->getRadius());
-				EnemySolder[EnemyNum]->setPosY(64+i *-3*EnemySolder[EnemyNum]->getRadius());
+				EnemySolder[EnemyNum]->setPosX(2 * EnemySolder[EnemyNum]->getRadius() +j *3*EnemySolder[EnemyNum]->getRadius());
+				EnemySolder[EnemyNum]->setPosY(2 * EnemySolder[EnemyNum]->getRadius() +i *-3*EnemySolder[EnemyNum]->getRadius());
 				EnemySolder[EnemyNum]->setisAlive(EnemyArmy[i][j]);
 				EnemyNum++;
 			}
 		}
 
+	Friend* FriendSolder[9];
+	for (int i = 0; i < 9; i++)
+	{
+		FriendSolder[i] = new Friend(0,0,32,32,10,5,5,32);
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		FriendSolder[i]->setPosX(2*FriendSolder[i]->getRadius() + i * 3*FriendSolder[i]->getRadius());
+		FriendSolder[i]->setPosY(WIN_HEIGHT - FriendSolder[i]->getRadius());
+	}
+
+	FriendSolder[8]->setPosX(WIN_WIDTH - 300);
+	FriendSolder[8]->setPosY(WIN_HEIGHT - 100);
+	
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };
 
@@ -99,6 +117,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			oldkeys[i] = keys[i];
 		}
+		oldMousePosX = MousePosX;
+		oldMousePosY = MousePosY;
+
 		// 最新のキーボード情報を取得
 		GetHitKeyStateAll(keys);
 
@@ -106,22 +127,45 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ClearDrawScreen();
 		//---------  ここからプログラムを記述  ----------//
 		// 更新処理
+		GetMousePoint(&MousePosX, &MousePosY);
 		player->move(keys, WIN_WIDTH, WIN_HEIGHT);
-		if(GetMouseInput()&&MOUSE_INPUT_LEFT!=0)
-		{/*
-			GetMousePoint(&MousePosX, &MousePosY);
-			EnemySolder->setPosX(MousePosX);
-			EnemySolder->setPosX(MousePosY);*/
+		if (
+			GetMouseInput() && MOUSE_INPUT_LEFT != 0
+			&&
+			(FriendSolder[8]->getPosX() - MousePosX) * (FriendSolder[8]->getPosX() - MousePosX) + (FriendSolder[8]->getPosY() - MousePosY) * (FriendSolder[8]->getPosY() - MousePosY)
+			<= FriendSolder[8]->getRadius() * FriendSolder[8]->getRadius()
+			)
+		{
+			FriendSolder[8]->setPosX(MousePosX);
+			FriendSolder[8]->setPosY(MousePosY);
 		}
+		/*if(GetMouseInput()&&MOUSE_INPUT_LEFT!=0)
+		{
+		}*/
 		for (int i = 0; i < 81; i++)
 		{
 			EnemySolder[i]->move();
 		}
 		
 		// 描画処理
+		DrawBox(WIN_WIDTH - 400, 0, WIN_WIDTH, WIN_HEIGHT, GetColor(255, 255, 200), true);
 		for (int i = 0; i < 81; i++)
 		{
 			EnemySolder[i]->draw();
+		}
+		for (int i = 0; i < 9; i++) {
+			FriendSolder[i]->draw();
+		}
+		if (
+			(FriendSolder[8]->getPosX() - MousePosX) * (FriendSolder[8]->getPosX() - MousePosX) + (FriendSolder[8]->getPosY() - MousePosY) * (FriendSolder[8]->getPosY() - MousePosY)
+			<= FriendSolder[8]->getRadius()* FriendSolder[8]->getRadius()
+		)
+		{
+			DrawFormatString(5, 5, GetColor(0, 200, 0), "grab now");
+		}
+		else
+		{
+			DrawFormatString(5, 5, GetColor(100, 0, 0), "free hand");
 		}
 		player->draw();
 

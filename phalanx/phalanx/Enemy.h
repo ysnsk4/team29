@@ -4,6 +4,7 @@ class Enemy : public Solder
 {
 private:
 	int isAlive;
+	int EnemySolder;
 public:
 	static int EnemyCount;
 
