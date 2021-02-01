@@ -3,7 +3,7 @@
 
 
 // Constructor
-Player::Player(int posX, int posY, int radius, int speed,int Range) {
+Player::Player(int posX, int posY, int radius, int speed, int Range) {
 	this->posX = posX;
 	this->posY = posY;
 	this->radius = radius;
@@ -42,7 +42,7 @@ void Player::draw() {
 		TRUE);
 }
 
-void Player::move(char keys[255], int WIN_WIDTH,int WIN_HEIGHT) {
+void Player::move(char keys[255], int WIN_WIDTH, int WIN_HEIGHT) {
 	if (CheckHitKey(KEY_INPUT_W) == 1 && posY > 0 + radius)
 	{
 		posY -= speed;
@@ -59,4 +59,35 @@ void Player::move(char keys[255], int WIN_WIDTH,int WIN_HEIGHT) {
 	{
 		posX += speed;
 	}
+}
+
+void Player::grabFriend(Friend* SolderF[9]) {
+	int grabFlag = 0;
+	oldMousePosX = MousePosX;
+	oldMousePosY = MousePosY;
+	oldMouseLeft = MouseLeft;
+	GetMousePoint(&MousePosX, &MousePosY);
+	GetMouseInput();
+	MouseLeft = MOUSE_INPUT_LEFT;
+
+
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) {
+		for (int i = 0; i < 9; i++) {
+			if (
+				(SolderF[i]->getPosX() - MousePosX) * (SolderF[i]->getPosX() - MousePosX) +
+				(SolderF[i]->getPosY() - MousePosY) * (SolderF[i]->getPosY() - MousePosY)
+				<= SolderF[i]->getRadius() * SolderF[i]->getRadius()
+				&&
+				grabFlag == 0
+				) {
+
+				SolderF[i]->setPosX(MousePosX);
+				SolderF[i]->setPosY(MousePosY);
+				grabFlag = 1;
+			}
+		}
+	} else {
+		grabFlag = 0;
+	}
+
 }

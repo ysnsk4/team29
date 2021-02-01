@@ -51,10 +51,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	int PlayerSpeed = 4;
 	int EnemyCountNum = 0;
 
-	int MousePosX=0;
-	int MousePosY=0;
+	int MousePosX = 0;
+	int MousePosY = 0;
+	int MouseLeft = 0;
 	int oldMousePosX;
 	int oldMousePosY;
+	int oldMouseLeft;
 
 	Player* player = new Player(300, 300, 32, 16, 64);
 
@@ -89,6 +91,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 
 	Friend* FriendSolder[9];
+	
 	for (int i = 0; i < 9; i++)
 	{
 		FriendSolder[i] = new Friend(0,0,32,32,10,5,5,32);
@@ -117,8 +120,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			oldkeys[i] = keys[i];
 		}
+		
 		oldMousePosX = MousePosX;
 		oldMousePosY = MousePosY;
+		oldMouseLeft = MouseLeft;
 
 		// 最新のキーボード情報を取得
 		GetHitKeyStateAll(keys);
@@ -127,18 +132,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ClearDrawScreen();
 		//---------  ここからプログラムを記述  ----------//
 		// 更新処理
+
 		GetMousePoint(&MousePosX, &MousePosY);
+		GetMouseInput();
+		MouseLeft = MOUSE_INPUT_LEFT;
+
 		player->move(keys, WIN_WIDTH, WIN_HEIGHT);
-		if (
-			GetMouseInput() && MOUSE_INPUT_LEFT != 0
-			&&
-			(FriendSolder[8]->getPosX() - MousePosX) * (FriendSolder[8]->getPosX() - MousePosX) + (FriendSolder[8]->getPosY() - MousePosY) * (FriendSolder[8]->getPosY() - MousePosY)
-			<= FriendSolder[8]->getRadius() * FriendSolder[8]->getRadius()
-			)
-		{
-			FriendSolder[8]->setPosX(MousePosX);
-			FriendSolder[8]->setPosY(MousePosY);
-		}
+
+		player->grabFriend(FriendSolder);
+		
 		/*if(GetMouseInput()&&MOUSE_INPUT_LEFT!=0)
 		{
 		}*/
