@@ -4,6 +4,7 @@ class Friend :public Solder
 {
 private:
 	int FriendSoldier;
+	int isAlive;
 public:
 	Friend(int posX, int posY, int radius, int speed, int HP, int DEF, int ATK, int Range);
 	~Friend();
@@ -13,6 +14,7 @@ public:
 
 	void move();
 	void Attack();
+	void death();
 
 	int getPosX();
 	int getPosY();

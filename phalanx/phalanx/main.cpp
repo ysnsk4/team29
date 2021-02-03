@@ -4,7 +4,7 @@
 #include"Friend.h"
 
 // ウィンドウのタイトルに表示する文字列
-const char TITLE[] = "学籍番号 名前:タイトル";
+const char TITLE[] = "防衛戦線ファランクス";
 
 // ウィンドウ横幅
 const int WIN_WIDTH = 1280;
@@ -33,7 +33,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetWindowSizeExtendRate(1.0);
 
 	// 画面の背景色を設定する
-	SetBackgroundColor(0x00, 0x00, 0xFF);			
+	SetBackgroundColor(0xF0, 0xF0, 0xF0);
 
 	// DXlibの初期化
 	if (DxLib_Init() == -1) { return -1; }
@@ -75,7 +75,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Enemy* EnemySolder[81];
 	for (int i = 0; i < 81; i++)
 	{
-		EnemySolder[i] =  new Enemy(32, 32, 32, 8, 10, 5, 5, 64, 0);
+		EnemySolder[i] =  new Enemy(32, 32, 32, 8, 10, 3, 8, 64, 0);
 	}
 
 	int EnemyNum = 0;
@@ -94,7 +94,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 	for (int i = 0; i < 9; i++)
 	{
-		FriendSolder[i] = new Friend(0,0,32,32,10,5,5,32);
+		FriendSolder[i] = new Friend(0,0,32,32,10,6,5,32);
 	}
 
 	for (int i = 0; i < 8; i++)
@@ -144,8 +144,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		/*if(GetMouseInput()&&MOUSE_INPUT_LEFT!=0)
 		{
 		}*/
+		for (int i = 0; i < 9; i++)
+		{
+			FriendSolder[i]->update();
+		}
+
 		for (int i = 0; i < 81; i++)
 		{
+			for (int j = 0; j < 9; j++) {
+				EnemySolder[i]->collide(FriendSolder);
+				EnemySolder[i]->Attack(FriendSolder);
+			}
+
+			EnemySolder[i]->death();
 			EnemySolder[i]->move();
 		}
 		
