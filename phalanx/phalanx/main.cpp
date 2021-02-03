@@ -2,6 +2,7 @@
 #include"Player.h"
 #include"Enemy.h"
 #include"Friend.h"
+#include"SceneManager.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "防衛戦線ファランクス";
@@ -58,11 +59,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	int oldMousePosY;
 	int oldMouseLeft;
 
-	int mapGraph = LoadGraph("resource/map1.png");
-	int ui1 = LoadGraph("resource/scroll.png");
-	int ui2= LoadGraph("resource/number.png");
-	int title1=LoadGraph("resource/title.png");
-	int title2 = LoadGraph("resource/title2.png");
+	SceneManager* scenemanager = new SceneManager();
+
 	Player* player = new Player(300, 300, 32, 16, 64);
 
 	int EnemyArmy[9][9] = {
@@ -136,53 +134,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 画面クリア
 		ClearDrawScreen();
 		//---------  ここからプログラムを記述  ----------//
-		// 更新処理
 
-		GetMousePoint(&MousePosX, &MousePosY);
-		GetMouseInput();
-		MouseLeft = MOUSE_INPUT_LEFT;
-
-		player->move(keys, WIN_WIDTH, WIN_HEIGHT);
-
-		player->grabFriend(FriendSolder);
+		scenemanager->change(keys, oldkeys, player, EnemySolder, FriendSolder);
 		
-		/*if(GetMouseInput()&&MOUSE_INPUT_LEFT!=0)
-		{
-		}*/
-		for (int i = 0; i < 9; i++)
-		{	
-			FriendSolder[i]->update(EnemySolder);
-		}
-
-		for (int i = 0; i < 81; i++)
-		{
-			EnemySolder[i]->update(FriendSolder);
-		}
-		
-		// 描画処理
-		DrawGraph(0, 0, mapGraph, true);
-		DrawGraph(WIN_WIDTH - 480, 0, ui1, true);
-		DrawBox(WIN_WIDTH - 400, 0, WIN_WIDTH, WIN_HEIGHT, GetColor(255, 255, 200), true);
-		for (int i = 0; i < 81; i++)
-		{
-			EnemySolder[i]->draw();
-		}
-		for (int i = 0; i < 9; i++) {
-			FriendSolder[i]->draw();
-		}
-		/*if (
-			(FriendSolder[8]->getPosX() - MousePosX) * (FriendSolder[8]->getPosX() - MousePosX) + (FriendSolder[8]->getPosY() - MousePosY) * (FriendSolder[8]->getPosY() - MousePosY)
-			<= FriendSolder[8]->getRadius()* FriendSolder[8]->getRadius()
-		)
-		{
-			DrawFormatString(5, 5, GetColor(0, 200, 0), "grab now");
-		}
-		else
-		{
-			DrawFormatString(5, 5, GetColor(100, 0, 0), "free hand");
-		}*/
-		player->draw();
-
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
 		ScreenFlip();	
