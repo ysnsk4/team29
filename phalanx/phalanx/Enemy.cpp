@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include"Friend.h"
 #include<DxLib.h>
 
 // Constructor

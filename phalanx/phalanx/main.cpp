@@ -145,10 +145,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 		}*/
 		for (int i = 0; i < 9; i++)
-		{
-			
-				FriendSolder[i]->update(EnemySolder);
-
+		{	
+			FriendSolder[i]->update(EnemySolder);
 		}
 
 		for (int i = 0; i < 81; i++)
@@ -165,7 +163,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		for (int i = 0; i < 9; i++) {
 			FriendSolder[i]->draw();
 		}
-		if (
+		/*if (
 			(FriendSolder[8]->getPosX() - MousePosX) * (FriendSolder[8]->getPosX() - MousePosX) + (FriendSolder[8]->getPosY() - MousePosY) * (FriendSolder[8]->getPosY() - MousePosY)
 			<= FriendSolder[8]->getRadius()* FriendSolder[8]->getRadius()
 		)
@@ -175,7 +173,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		else
 		{
 			DrawFormatString(5, 5, GetColor(100, 0, 0), "free hand");
-		}
+		}*/
 		player->draw();
 
 		//---------  ここまでにプログラムを記述  ---------//
