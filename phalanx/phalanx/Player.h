@@ -16,6 +16,8 @@ private:
 	int oldMousePosX;
 	int oldMousePosY;
 	int oldMouseLeft;
+
+	int playerGraph;
 public:
 	Player(int posX, int posY, int radius, int speed,int Range);
 	~Player();

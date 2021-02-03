@@ -10,6 +10,7 @@ Player::Player(int posX, int posY, int radius, int speed, int Range) {
 	this->speed = speed;
 	this->Range = Range;
 	this->isGrab = 0;
+	this->playerGraph = LoadGraph("resource/player.png");
 }
 
 // Destructor
@@ -33,13 +34,19 @@ void Player::setRange(int Range) { this->Range = Range; }
 void Player::update() {}
 
 void Player::draw() {
-	DrawBox(
+	//DrawBox(
+	//	posX - radius,
+	//	posY - radius,
+	//	posX + radius,
+	//	posY + radius,
+	//	GetColor(200, 200, 255),
+	//	TRUE);
+	DrawGraph(
 		posX - radius,
 		posY - radius,
-		posX + radius,
-		posY + radius,
-		GetColor(200, 200, 255),
-		TRUE);
+		playerGraph,
+		true
+	);
 }
 
 void Player::move(char keys[255], int WIN_WIDTH, int WIN_HEIGHT) {

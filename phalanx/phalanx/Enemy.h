@@ -1,8 +1,13 @@
 #pragma once
 #include "Solder.h"
+#include"Friend.h"
+
 class Enemy : public Solder
 {
 private:
+
+	int AttackHaste;
+	int AttackCooldown;
 	int isAlive;
 	int EnemySolder;
 public:
@@ -14,7 +19,9 @@ public:
 	void update();
 	void draw();
 	void move();
-	void Attack();
+	void collide(Friend* SolderF[9]);
+	void Attack(Friend* SolderF[9]);
+	void death();
 
 	int getPosX();
 	int getPosY();

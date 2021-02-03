@@ -13,6 +13,8 @@ Enemy::Enemy(int posX, int posY, int radius, int speed, int HP, int DEF, int ATK
 	this->Range = Range;
 	this->isAlive;
 	EnemyCount++;
+	AttackHaste = 50;
+	AttackCooldown = AttackHaste;
 	EnemySolder = LoadGraph("resource/enemy4.png");
 }
 
@@ -63,11 +65,79 @@ void Enemy::draw() {
 	}
 }
 
-void Enemy::Attack() {
+void Enemy::Attack(Friend* SolderF[9]) {
+	if (AttackCooldown == 0)
+	{
+		int isAttack = 0;
+		int whoAttack = 999;
+
+		for (int i = 0; i < 9; i++) {
+			if (
+				isAttack == 0
+				&&
+				(SolderF[i]->getPosX() - this->posX) * (SolderF[i]->getPosX() - this->posX) +
+				(SolderF[i]->getPosY() - this->posY) * (SolderF[i]->getPosY() - this->posY)
+				<= (SolderF[i]->getRadius() + this->radius) * (SolderF[i]->getRadius() + this->radius)
+				) {
+				isAttack = 1;
+				whoAttack = i;
+			}
+		}
+
+		if (isAttack == 1)
+		{
+			SolderF[whoAttack]->setHP(SolderF[whoAttack]->getHP() - (this->ATK - SolderF[whoAttack]->getDEF()));
+			DrawFormatString(SolderF[whoAttack]->getPosX(), SolderF[whoAttack]->getPosY(), GetColor(255, 0, 0), "%d", this->ATK - SolderF[whoAttack]->getDEF());
+		}
+
+		AttackCooldown = AttackHaste;
+	}
+	else
+	{
+		AttackCooldown--;
+	}
+
 }
 
 void Enemy::move() {
 	if (this->isAlive == 1) {
 		posY += speed;
+	}
+}
+
+
+void Enemy::collide(Friend* SolderF[9]) {
+
+	int isCollide = 0;
+
+	for (int i = 0; i < 9; i++) {
+		if (
+			(SolderF[i]->getPosX() - this->posX) * (SolderF[i]->getPosX() - this->posX) +
+			(SolderF[i]->getPosY() - this->posY) * (SolderF[i]->getPosY() - this->posY)
+			<= (SolderF[i]->getRadius()+this->radius )*( SolderF[i]->getRadius()+this->radius)
+			) {
+			isCollide = 1;
+		}
+	}
+
+	if (isCollide==1)
+	{
+		this->speed = 0;
+	}
+	else
+	{
+		this->speed = 8;
+	}
+}
+
+void Enemy::death() {
+	if (HP <= 0)
+	{
+		isAlive = 0;
+		posX = 1000;
+	}
+	else
+	{
+		isAlive = 1;
 	}
 }
