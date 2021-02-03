@@ -58,6 +58,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	int oldMousePosY;
 	int oldMouseLeft;
 
+	int mapGraph = LoadGraph("resource/map1.png");
+	int ui1 = LoadGraph("resource/scroll.png");
+	int ui2= LoadGraph("resource/number.png");
+	int title1=LoadGraph("resource/title.png");
+	int title2 = LoadGraph("resource/title2.png");
 	Player* player = new Player(300, 300, 32, 16, 64);
 
 	int EnemyArmy[9][9] = {
@@ -155,6 +160,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		
 		// ï`âÊèàóù
+		DrawGraph(0, 0, mapGraph, true);
+		DrawGraph(WIN_WIDTH - 480, 0, ui1, true);
 		DrawBox(WIN_WIDTH - 400, 0, WIN_WIDTH, WIN_HEIGHT, GetColor(255, 255, 200), true);
 		for (int i = 0; i < 81; i++)
 		{
