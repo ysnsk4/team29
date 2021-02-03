@@ -146,18 +146,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}*/
 		for (int i = 0; i < 9; i++)
 		{
-			FriendSolder[i]->update();
+			
+				FriendSolder[i]->update(EnemySolder);
+
 		}
 
 		for (int i = 0; i < 81; i++)
 		{
-			for (int j = 0; j < 9; j++) {
-				EnemySolder[i]->collide(FriendSolder);
-				EnemySolder[i]->Attack(FriendSolder);
-			}
-
-			EnemySolder[i]->death();
-			EnemySolder[i]->move();
+			EnemySolder[i]->update(FriendSolder);
 		}
 		
 		// •`‰æˆ—

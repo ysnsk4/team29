@@ -1,19 +1,24 @@
 #pragma once
 #include "Solder.h"
+#include"Enemy.h"
+
 class Friend :public Solder
 {
 private:
 	int FriendSoldier;
+
+	int AttackHaste;
+	int AttackCooldown;
 	int isAlive;
 public:
 	Friend(int posX, int posY, int radius, int speed, int HP, int DEF, int ATK, int Range);
 	~Friend();
 
-	void update();
+	void update(Enemy* enemys[81]);
 	void draw();
 
 	void move();
-	void Attack();
+	void Attack(Enemy* enemys[81]);
 	void death();
 
 	int getPosX();

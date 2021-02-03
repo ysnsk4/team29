@@ -16,7 +16,7 @@ public:
 	Enemy(int posX, int posY, int radius, int speed, int HP, int DEF, int ATK, int Range,int isAlive);
 	~Enemy();
 
-	void update();
+	void update(Friend* SolderF[9]);
 	void draw();
 	void move();
 	void collide(Friend* SolderF[9]);

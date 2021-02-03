@@ -45,7 +45,12 @@ void Enemy::setATK(int ATK) { this->ATK = ATK; }
 void Enemy::setRange(int Range) { this->Range = Range; }
 void Enemy::setisAlive(int isAlive) { this->isAlive=isAlive; }
 // Member Function
-void Enemy::update() {}
+void Enemy::update(Friend* SolderF[9]) {
+	death();
+	Attack(SolderF);
+	collide(SolderF);
+	move();
+}
 
 void Enemy::draw() {
 	if (this->isAlive == 1) {
