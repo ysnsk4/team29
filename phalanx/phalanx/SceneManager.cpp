@@ -10,6 +10,8 @@ SceneManager::SceneManager() {
 	ui2 = LoadGraph("resource/number.png");
 	title1 = LoadGraph("resource/title.png");
 	title2 = LoadGraph("resource/title2.png");
+	titleBGM = LoadSoundMem("resource/title.mp3");
+	inGameBGM = LoadSoundMem("resource/inGame.mp3");
 
 }
 

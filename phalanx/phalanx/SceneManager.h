@@ -19,6 +19,9 @@ private:
 	int title1;
 	int title2;
 
+	int titleBGM;
+	int inGameBGM;
+
 public:
 	SceneManager();
 	

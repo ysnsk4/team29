@@ -1,6 +1,7 @@
 #pragma once
-#include "Solder.h"
 #include"Friend.h"
+#include "Solder.h"
+
 
 class Enemy : public Solder
 {
@@ -16,7 +17,7 @@ public:
 	Enemy(int posX, int posY, int radius, int speed, int HP, int DEF, int ATK, int Range,int isAlive);
 	~Enemy();
 
-	void update(Friend* SolderF[9]);
+	void update(class Friend* SolderF[9]);
 	void draw();
 	void move();
 	void collide(Friend* SolderF[9]);
