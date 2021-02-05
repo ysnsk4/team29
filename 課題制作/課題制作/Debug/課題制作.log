@@ -1,4 +1,6 @@
-﻿  main.cpp
+﻿  Result.cpp
+C:\Users\hunte\Documents\team29\課題制作\課題制作\Result.h(7,11): warning C4200: 非標準の拡張機能が使用されています: 構造体または共用体中にサイズが 0 の配列があります。
+C:\Users\hunte\Documents\team29\課題制作\課題制作\Result.h(7,11): message : このメンバーは、既定のコンストラクターまたはコピー/移動代入演算子により無視されます
   SceneManager.cpp
   コードを生成中...
-  課題制作.vcxproj -> C:\Users\ysnsk\OneDrive\ドキュメント\GitHub\team29\課題制作\Debug\課題制作.exe
+  課題制作.vcxproj -> C:\Users\hunte\Documents\team29\課題制作\Debug\課題制作.exe
