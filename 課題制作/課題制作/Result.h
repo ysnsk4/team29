@@ -3,11 +3,10 @@ class Result
 {
 private:
 	int gold;
-	int x;
-	int hud[];
+	int hud[10];
 public:
 	Result();
 
-	void draw(char keys[255]);
+	void draw(int gold);
 };
 

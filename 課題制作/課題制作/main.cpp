@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "Result.h"
 
+
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "学籍番号 名前:タイトル";
 
@@ -73,7 +74,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 描画処理
 		scenemanager->change(keys,oldkeys);
 
-		result->draw(keys);
+		result->draw(10);
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
 		ScreenFlip();	
