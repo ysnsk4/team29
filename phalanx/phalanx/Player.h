@@ -30,7 +30,7 @@ public:
 	void Defence(Enemy*enemy[72],int WIN_HEIGHT);
 
 	void move(char keys[255], int WIN_WIDTH, int WIN_HEIGHT);
-	void grabFriend(Friend* SolderF[9]);
+	void grabFriend(Friend* SolderF[64]);
 
 	int getPosX();
 	int getPosY();

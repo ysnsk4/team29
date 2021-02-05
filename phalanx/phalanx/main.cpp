@@ -86,16 +86,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			for (int j = 0; j < 8; j++)
 			{
-				EnemySolder[EnemyNum]->setPosX(2 * EnemySolder[EnemyNum]->getRadius() +j *3*EnemySolder[EnemyNum]->getRadius());
-				EnemySolder[EnemyNum]->setPosY(2 * EnemySolder[EnemyNum]->getRadius() +i *-3*EnemySolder[EnemyNum]->getRadius());
+
+				int randamX = rand() % 16 - 8;
+				int randamY = rand() % 16 - 8;
+				EnemySolder[EnemyNum]->setPosX(2 * EnemySolder[EnemyNum]->getRadius() +j *3*EnemySolder[EnemyNum]->getRadius()+randamX);
+				EnemySolder[EnemyNum]->setPosY(2 * EnemySolder[EnemyNum]->getRadius() +i *-3*EnemySolder[EnemyNum]->getRadius()+randamY);
 				EnemySolder[EnemyNum]->setisAlive(EnemyArmy[i][j]);
 				EnemyNum++;
 			}
 		}
 
-	Friend* FriendSolder[9];
-	
-	for (int i = 0; i < 9; i++)
+	Friend* FriendSolder[64];
+
+	for (int i = 0; i < 64; i++)
 	{
 		FriendSolder[i] = new Friend(0,0,32,32,200,6,5,32);
 	}
@@ -106,9 +109,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		FriendSolder[i]->setPosY(400);//WIN_HEIGHT - FriendSolder[i]->getRadius()
 	}
 
-	FriendSolder[8]->setPosX(WIN_WIDTH - 300);
-	FriendSolder[8]->setPosY(WIN_HEIGHT - 100);
-	
+	for (int i = 8; i < 64; i++)
+	{
+		int randamX = rand() % 32-16;
+		int randamY = rand() % 32-16;
+		FriendSolder[i]->setPosX(WIN_WIDTH - 300+randamX);
+		FriendSolder[i]->setPosY(WIN_HEIGHT - 100+randamY);
+	}
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };
 

@@ -1,7 +1,6 @@
 #include<DxLib.h>
 #include "Player.h"
 
-
 // Constructor
 Player::Player(int posX, int posY, int radius, int speed, int Range) {
 	this->posX = posX;
@@ -72,7 +71,7 @@ void Player::move(char keys[255], int WIN_WIDTH, int WIN_HEIGHT) {
 	}
 }
 
-void Player::grabFriend(Friend* SolderF[9]) {
+void Player::grabFriend(Friend* SolderF[64]) {
 	int grabFlag = 0;
 	oldMousePosX = MousePosX;
 	oldMousePosY = MousePosY;
@@ -83,7 +82,7 @@ void Player::grabFriend(Friend* SolderF[9]) {
 
 
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) {
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 64; i++) {
 			if (
 				(SolderF[i]->getPosX() - MousePosX) * (SolderF[i]->getPosX() - MousePosX) +
 				(SolderF[i]->getPosY() - MousePosY) * (SolderF[i]->getPosY() - MousePosY)
