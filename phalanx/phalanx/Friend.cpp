@@ -43,7 +43,7 @@ void Friend::setDEF(int DEF) { this->DEF = DEF; }
 void Friend::setATK(int ATK) { this->ATK = ATK; }
 void Friend::setRange(int Range) { this->Range = Range; }
 // Member Function
-void Friend::update(Enemy*enemys[81]) {
+void Friend::update(Enemy*enemys[72]) {
 	death();
 	move();
 	Attack(enemys);
@@ -70,13 +70,13 @@ void Friend::draw() {
 	}
 }
 
-void Friend::Attack(Enemy*enemys[81]){
+void Friend::Attack(Enemy*enemys[72]){
 	if (AttackCooldown == 0)
 	{
 		int isAttack = 0;
 		int whoAttack = 999;
 
-		for (int i = 0; i < 81; i++) {
+		for (int i = 0; i < 72; i++) {
 			if (
 				isAttack == 0
 				&&
@@ -110,8 +110,9 @@ void Friend::move() {
 void Friend::death() {
 	if (HP <= 0)
 	{
-		isAlive = 0;
+		//isAlive = 0;
 		posX = 1000;
+		HP = 200;
 	}
 	else
 	{

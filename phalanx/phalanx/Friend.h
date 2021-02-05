@@ -14,11 +14,11 @@ public:
 	Friend(int posX, int posY, int radius, int speed, int HP, int DEF, int ATK, int Range);
 	~Friend();
 
-	void update(Enemy* enemys[81]);
+	void update(class Enemy* enemys[72]);
 	void draw();
 
 	void move();
-	void Attack(Enemy* enemys[81]);
+	void Attack(Enemy* enemys[72]);
 	void death();
 
 	int getPosX();

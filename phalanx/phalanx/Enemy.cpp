@@ -13,7 +13,7 @@ Enemy::Enemy(int posX, int posY, int radius, int speed, int HP, int DEF, int ATK
 	this->ATK = ATK;
 	this->Range = Range;
 	this->isAlive;
-	EnemyCount++;
+	//EnemyCount++;
 	AttackHaste = 50;
 	AttackCooldown = AttackHaste;
 	EnemySolder = LoadGraph("resource/enemy4.png");
@@ -21,7 +21,7 @@ Enemy::Enemy(int posX, int posY, int radius, int speed, int HP, int DEF, int ATK
 
 // Destructor
 Enemy::~Enemy() {
-	EnemyCount--;
+	//EnemyCount--;
 }
 
 // Getter
@@ -126,13 +126,13 @@ void Enemy::collide(Friend* SolderF[9]) {
 		}
 	}
 
-	if (isCollide==1)
+	if (isCollide==1 || posY+radius>=800)
 	{
 		this->speed = 0;
 	}
 	else
 	{
-		this->speed = 8;
+		this->speed = 2;
 	}
 }
 
@@ -140,7 +140,6 @@ void Enemy::death() {
 	if (HP <= 0)
 	{
 		isAlive = 0;
-		posX = 1000;
 	}
 	else
 	{
