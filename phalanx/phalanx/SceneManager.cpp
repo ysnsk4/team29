@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+ï»¿#include "SceneManager.h"
 #include "DxLib.h"
 
 SceneManager::SceneManager() {
@@ -14,54 +14,70 @@ SceneManager::SceneManager() {
 	inGameBGM = LoadSoundMem("resource/inGame.mp3");
 
 }
-
-void SceneManager::change(char keys[255], char oldkeys[255], Player* player, Enemy* enemy[81], Friend* friends[9]) {
+//
+void SceneManager::change(char keys[255], char oldkeys[255], Player* player, Enemy* enemy[72], Friend* friends[9],int MousePosX,int MousePosY,int MouseLeft,int WIN_WIDTH,int WIN_HEIGHT) {
 	if (isEnd == 0) {
 		switch (sc) {
 		case title:
 			if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0) {
 				sc = play;
 			}
-
+			if (CheckSoundMem(inGameBGM) == 1)
+			{
+				StopSoundMem(inGameBGM);
+			}
+			if (CheckSoundMem(titleBGM) == 0)
+			{
+				PlaySoundMem(titleBGM, DX_PLAYTYPE_BACK, true);
+			}
 			DrawGraph(0, 0, title2, true);
 
 			break;
 		case play:
-			/*if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0) {
-				Scene = 3;
-			}*/
-			// XVˆ—
+			if (CheckSoundMem(titleBGM) == 1)
+			{
+				StopSoundMem(titleBGM);
+			}
+			if (CheckSoundMem(inGameBGM) == 0)
+			{
+				PlaySoundMem(inGameBGM, DX_PLAYTYPE_BACK, true);
+			}
+			
+			if (player->getHP()<=0) {
+				sc = result;
+			}
+			// ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½
 
 			GetMousePoint(&MousePosX, &MousePosY);
 			GetMouseInput();
 			MouseLeft = MOUSE_INPUT_LEFT;
 
 			player->move(keys, WIN_WIDTH, WIN_HEIGHT);
-
-			player->grabFriend(FriendSolder);
+			player->Defence(enemy,WIN_HEIGHT);
+			player->grabFriend(friends);
 
 			/*if(GetMouseInput()&&MOUSE_INPUT_LEFT!=0)
 			{
 			}*/
 			for (int i = 0; i < 9; i++)
 			{
-				FriendSolder[i]->update(EnemySolder);
+				friends[i]->update(enemy);
 			}
 
-			for (int i = 0; i < 81; i++)
+			for (int i = 0; i < 72; i++)
 			{
-				EnemySolder[i]->update(FriendSolder);
+				enemy[i]->update(friends);
 			}
 
-			// •`‰æˆ—
+			// ï¿½`ï¿½æˆï¿½ï¿½
 			DrawGraph(0, 0, mapGraph, true);
 			DrawGraph(WIN_WIDTH - 480, 0, ui1, true);
-			for (int i = 0; i < 81; i++)
+			for (int i = 0; i < 72; i++)
 			{
-				EnemySolder[i]->draw();
+				enemy[i]->draw();
 			}
 			for (int i = 0; i < 9; i++) {
-				FriendSolder[i]->draw();
+				friends[i]->draw();
 			}
 			/*if (
 				(FriendSolder[8]->getPosX() - MousePosX) * (FriendSolder[8]->getPosX() - MousePosX) + (FriendSolder[8]->getPosY() - MousePosY) * (FriendSolder[8]->getPosY() - MousePosY)
@@ -76,13 +92,27 @@ void SceneManager::change(char keys[255], char oldkeys[255], Player* player, Ene
 			}*/
 			player->draw();
 
-
+			int HPcolor;
+			if (player->getHP() >= 400)
+			{
+				HPcolor = GetColor(0, 255, 0);
+			}
+			else if (player->getHP() < 400 && player->getHP() >= 200)
+			{
+				HPcolor = GetColor(255, 255, 0);
+			}
+			else if (player->getHP() < 200 )
+			{
+				HPcolor = GetColor(255, 0, 0);
+			}
+			DrawBox(0, 0, player->getHP(), 10, HPcolor, true);
 
 			break;
 		case result:
 			if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0) {
-				isEnd = 1;
+				sc = title;
 			}
+			DrawFormatString(5, 5, GetColor(255, 255, 255), "GameSet!Press Space");
 			break;
 		}
 	}

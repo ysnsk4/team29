@@ -24,7 +24,7 @@ private:
 
 public:
 	SceneManager();
-	
-	void change(char keys[255],char oldkeys[255],Player*player,Enemy*enemy[81],Friend*friends[9]);
+	//
+	void change(char keys[255],char oldkeys[255],Player* player,Enemy* enemy[72],Friend* friends[9],int MousePosX,int MousePosY,int MouseLeft,int WIN_WIDTH,int WIN_HEIGHT);
 };
 

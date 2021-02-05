@@ -12,7 +12,7 @@ private:
 	int isAlive;
 	int EnemySolder;
 public:
-	static int EnemyCount;
+	//static int EnemyCount;
 
 	Enemy(int posX, int posY, int radius, int speed, int HP, int DEF, int ATK, int Range,int isAlive);
 	~Enemy();

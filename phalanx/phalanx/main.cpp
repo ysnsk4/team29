@@ -13,7 +13,7 @@ const int WIN_WIDTH = 1280;
 // ウィンドウ縦幅
 const int WIN_HEIGHT = 800;	
 
-int Enemy::EnemyCount;
+//int Enemy::EnemyCount;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
@@ -34,7 +34,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetWindowSizeExtendRate(1.0);
 
 	// 画面の背景色を設定する
-	SetBackgroundColor(0xF0, 0xF0, 0xF0);
+	SetBackgroundColor(0, 0, 0);
 
 	// DXlibの初期化
 	if (DxLib_Init() == -1) { return -1; }
@@ -63,28 +63,28 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	Player* player = new Player(300, 300, 32, 16, 64);
 
-	int EnemyArmy[9][9] = {
-		{1,0,1,0,1,0,1,0,1},
-		{1,1,1,1,1,1,1,1,1},
-		{1,1,1,1,0,1,1,1,1},
-		{1,1,1,0,0,0,1,1,1},
-		{1,1,0,0,1,0,0,1,1},
-		{1,1,1,0,0,0,1,1,1},
-		{1,1,1,1,0,1,1,1,1},
-		{1,1,1,1,1,1,1,1,1},
-		{0,1,0,1,0,1,0,1,0}
+	int EnemyArmy[9][8] = {
+		{1,0,1,0,1,0,1,0},
+		{1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1},
+		{1,1,1,0,0,1,1,1},
+		{1,1,0,0,0,0,1,1},
+		{1,1,1,0,0,1,1,1},
+		{1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1},
+		{0,1,0,1,0,1,0,1}
 	};
 
-	Enemy* EnemySolder[81];
-	for (int i = 0; i < 81; i++)
+	Enemy* EnemySolder[72];
+	for (int i = 0; i < 72; i++)
 	{
-		EnemySolder[i] =  new Enemy(32, 32, 32, 8, 10, 3, 8, 64, 0);
+		EnemySolder[i] =  new Enemy(32, 32, 32, 2, 10, 3, 8, 64, 0);
 	}
 
 	int EnemyNum = 0;
 		for (int i = 0; i < 9; i++)
 		{
-			for (int j = 0; j < 9; j++)
+			for (int j = 0; j < 8; j++)
 			{
 				EnemySolder[EnemyNum]->setPosX(2 * EnemySolder[EnemyNum]->getRadius() +j *3*EnemySolder[EnemyNum]->getRadius());
 				EnemySolder[EnemyNum]->setPosY(2 * EnemySolder[EnemyNum]->getRadius() +i *-3*EnemySolder[EnemyNum]->getRadius());
@@ -97,13 +97,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 	for (int i = 0; i < 9; i++)
 	{
-		FriendSolder[i] = new Friend(0,0,32,32,10,6,5,32);
+		FriendSolder[i] = new Friend(0,0,32,32,200,6,5,32);
 	}
 
 	for (int i = 0; i < 8; i++)
 	{
 		FriendSolder[i]->setPosX(2*FriendSolder[i]->getRadius() + i * 3*FriendSolder[i]->getRadius());
-		FriendSolder[i]->setPosY(WIN_HEIGHT - FriendSolder[i]->getRadius());
+		FriendSolder[i]->setPosY(400);//WIN_HEIGHT - FriendSolder[i]->getRadius()
 	}
 
 	FriendSolder[8]->setPosX(WIN_WIDTH - 300);
@@ -128,22 +128,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		oldMousePosY = MousePosY;
 		oldMouseLeft = MouseLeft;
 
-		// 最新のキーボード情報を取得
+		//// 最新のキーボード情報を取得
 		GetHitKeyStateAll(keys);
 
-		// 画面クリア
+		//// 画面クリア
 		ClearDrawScreen();
-		//---------  ここからプログラムを記述  ----------//
+		////---------  ここからプログラムを記述  ----------//
 
-		scenemanager->change(keys, oldkeys, player, EnemySolder, FriendSolder);
-		
+		scenemanager->change(keys, oldkeys, player, EnemySolder, FriendSolder, MousePosX, MousePosY, MouseLeft, WIN_WIDTH, WIN_HEIGHT);
+	
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
 		ScreenFlip();	
 
 		// 20ミリ秒待機(疑似60FPS)
 		WaitTimer(20);
-
 		// Windowsシステムからくる情報を処理する
 		if (ProcessMessage() == -1)
 		{
@@ -156,6 +155,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			break;
 		}
 	}
+	InitGraph();
+	InitSoundMem();
 	// Dxライブラリ終了処理
 	DxLib_End();
 

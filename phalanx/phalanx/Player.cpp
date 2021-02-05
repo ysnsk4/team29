@@ -10,6 +10,8 @@ Player::Player(int posX, int posY, int radius, int speed, int Range) {
 	this->speed = speed;
 	this->Range = Range;
 	this->isGrab = 0;
+	this->HP = 800;
+	this->Gold = 0;
 	this->playerGraph = LoadGraph("resource/player.png");
 }
 
@@ -23,6 +25,7 @@ int Player::getPosY() { return posY; }
 int Player::getRadius() { return radius; }
 int Player::getSpeed() { return speed; }
 int Player::getRange() { return Range; }
+int Player::getHP() { return HP; }
 
 // Setter
 void Player::setPosX(int posX) { this->posX = posX; }
@@ -30,6 +33,7 @@ void Player::setPosY(int posY) { this->posY = posY; }
 void Player::setRadius(int radius) { this->radius = radius; }
 void Player::setSpeed(int speed) { this->speed = speed; }
 void Player::setRange(int Range) { this->Range = Range; }
+void Player::setHP(int HP) { this->HP=HP; }
 // Member Function
 void Player::update() {}
 
@@ -97,4 +101,16 @@ void Player::grabFriend(Friend* SolderF[9]) {
 		grabFlag = 0;
 	}
 
+}
+
+void Player::Defence(Enemy* enemy[72],int WIN_HEIGHT) {
+	for (int i = 0; i < 72; i++) {
+		if (
+			enemy[i]->getPosY()
+			>=WIN_HEIGHT-enemy[i]->getRadius()
+			) 
+		{
+			this->HP--;
+		}
+	}
 }
