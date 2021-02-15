@@ -3,7 +3,7 @@ class Result
 {
 private:
 	int gold;
-	int hud[10];
+	int hud[];
 public:
 	Result();
 
