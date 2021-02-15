@@ -46,7 +46,7 @@ void Enemy::setATK(int ATK) { this->ATK = ATK; }
 void Enemy::setRange(int Range) { this->Range = Range; }
 void Enemy::setisAlive(int isAlive) { this->isAlive=isAlive; }
 // Member Function
-void Enemy::update(Friend* SolderF[9]) {
+void Enemy::update(Friend* SolderF[64]) {
 	death();
 	Attack(SolderF);
 	collide(SolderF);
@@ -71,13 +71,13 @@ void Enemy::draw() {
 	}
 }
 
-void Enemy::Attack(Friend* SolderF[9]) {
+void Enemy::Attack(Friend* SolderF[64]) {
 	if (AttackCooldown == 0)
 	{
 		int isAttack = 0;
 		int whoAttack = 999;
 
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 64; i++) {
 			if (
 				isAttack == 0
 				&&
@@ -112,11 +112,11 @@ void Enemy::move() {
 }
 
 
-void Enemy::collide(Friend* SolderF[9]) {
+void Enemy::collide(Friend* SolderF[64]) {
 
 	int isCollide = 0;
 
-	for (int i = 0; i < 9; i++) {
+	for (int i = 0; i < 64; i++) {
 		if (
 			(SolderF[i]->getPosX() - this->posX) * (SolderF[i]->getPosX() - this->posX) +
 			(SolderF[i]->getPosY() - this->posY) * (SolderF[i]->getPosY() - this->posY)
